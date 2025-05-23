@@ -89,7 +89,7 @@
 </head>
 <body>
   <h2>Violín Virtual</h2>
-  <div>
+  <div style="overflow-y: auto; max-height: 70vh; display: flex; flex-direction: column; align-items: center; width: 100%;">
     <button class="note-button" data-note="C4" style="background-color:#e57373;">Do</button>
     <button class="note-button" data-note="D4" style="background-color:#f06292;">Re</button>
     <button class="note-button" data-note="E4" style="background-color:#ba68c8;">Mi</button>
@@ -146,6 +146,7 @@
 
     document.querySelectorAll('.note-button').forEach(button => {
       button.addEventListener('touchstart', async () => {
+        if (navigator.vibrate) navigator.vibrate(50);
         if (!audioCtx || audioCtx.state === 'suspended') await audioCtx.resume();
         const note = button.dataset.note;
         button.classList.add('active');
@@ -154,6 +155,7 @@
         if (!buffers[note]) {
           buffers[note] = await loadSample(note);
         }
+        playSample(note);
       });
 
       button.addEventListener('touchend', () => {
@@ -164,20 +166,7 @@
       });
     });
 
-    window.addEventListener('devicemotion', (event) => {
-      if (!currentNote) return;
-      const acc = event.accelerationIncludingGravity;
-      if (!acc) return;
-      const z = Math.abs(acc.z);
-      if (z > 2.5 && !isMoving) {
-        document.body.classList.add('vibrating');
-        isMoving = true;
-        playSample(currentNote);
-      } else if (z < 1 && isMoving) {
-        isMoving = false;
-        stopSample();
-      }
-    });
+    
 
     window.addEventListener('load', initSamples);
   </script>
