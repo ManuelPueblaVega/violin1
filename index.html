@@ -20,14 +20,14 @@
       touch-action: none;
     }
     .note-button {
-      width: 90%;
+      width: 90%; max-width: 600px;
       margin: 10px;
       padding: 20px;
       background: #333;
       border: none;
       border-radius: 12px;
       color: white;
-      font-size: 1.5em;
+      font-size: calc(1rem + 1vw);
       text-align: center;
       transition: background 0.2s;
     }
@@ -89,7 +89,7 @@
 </head>
 <body>
   <h2>Violín Virtual</h2>
-  <div style="overflow-y: auto; max-height: 70vh; display: flex; flex-direction: column; align-items: center; width: 100%;">
+  <div style="overflow-y: auto; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; width: 100%; padding: 20px 0; gap: 10px;">
     <button class="note-button" data-note="C4" style="background-color:#e57373;">Do</button>
     <button class="note-button" data-note="D4" style="background-color:#f06292;">Re</button>
     <button class="note-button" data-note="E4" style="background-color:#ba68c8;">Mi</button>
